@@ -12,7 +12,7 @@ function App() {
   const { data, error } = await supabase
     .from('colaboradores_gms')
     .select('*')
-    .eq('id', 1)
+    .eq('id', 2)
     .single();
 
   console.log('DATA:', data);
