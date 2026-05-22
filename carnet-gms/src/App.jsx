@@ -9,18 +9,23 @@ function App() {
   }, []);
 
   async function fetchEmployee() {
-    const { data, error } = await supabase
-      .from('colaboradores_gms')
-      .select('*')
-      .eq('id', 1)
-      .single();
+  const { data, error } = await supabase
+    .from('colaboradores_gms')
+    .select('*')
+    .eq('id', 1)
+    .limit(5);
 
-    if (error) {
-      console.error(error);
-    } else {
-      setEmployee(data);
-    }
+  console.log('DATA:', data);
+  console.log('ERROR:', error);
+
+  if (error) {
+    alert(error.message);
+    return;
   }
+
+  setEmployee(data);
+}
+  
 
   if (!employee) {
     return <h1>Loading...</h1>;
