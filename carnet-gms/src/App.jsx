@@ -1,113 +1,47 @@
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from './services/supabaseClient';
 
-function App() {
+function Carnet() {
+  const { id } = useParams();
   const [employee, setEmployee] = useState(null);
 
   useEffect(() => {
+    async function fetchEmployee() {
+      const { data, error } = await supabase
+        .from('colaboradores_gms')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (!error) setEmployee(data);
+    }
+
     fetchEmployee();
-  }, []);
+  }, [id]);
 
-  async function fetchEmployee() {
-  const { data, error } = await supabase
-    .from('colaboradores_gms')
-    .select('*')
-    .eq('id', 2)
-    .single();
-
-  console.log('DATA:', data);
-  console.log('ERROR:', error);
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  setEmployee(data);
-}
-
-  if (!employee) {
-    return <h1>Loading...</h1>;
-  }
+  if (!employee) return <h1>Loading...</h1>;
 
   const imageUrl = `https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/${employee.foto_colaborador}`;
 
   return (
-
-    <div style={{
-
-      maxWidth: '400px',
-
-      margin: '50px auto',
-
-      padding: '20px',
-
-      border: '1px solid #ccc',
-
-      borderRadius: '15px',
-
-      textAlign: 'center',
-
-      background: '#111827',
-
-      color: 'white'
-
-    }}>
-
+    <div>
       <h1>Digital Carnet</h1>
-
-      <img
-
-        src={imageUrl}
-
-        alt="Employee"
-
-        style={{
-
-          width: '120px',
-
-          height: '120px',
-
-          borderRadius: '50%',
-
-          objectFit: 'cover',
-
-          marginBottom: '20px',
-
-          border: '3px solid white'
-
-        }}
-
-      />
-
-      <h2>
-
-        {employee.nombre} {employee.apellido}
-
-      </h2>
-
-      <p>
-
-        <strong>Cargo:</strong> {employee.cargo}
-
-      </p>
-
-      <p>
-
-        <strong>Departamento:</strong> {employee.departamento}
-
-      </p>
-
-      <p>
-
-        <strong>Status:</strong> {employee.status}
-
-      </p>
-
+      <img src={imageUrl} alt="Employee" width="120" />
+      <h2>{employee.nombre} {employee.apellido}</h2>
+      <p>{employee.cargo}</p>
+      <p>{employee.departamento}</p>
+      <p>{employee.status}</p>
     </div>
-
   );
-
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/carnet/:id" element={<Carnet />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
