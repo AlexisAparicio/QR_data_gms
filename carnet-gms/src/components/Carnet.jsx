@@ -36,11 +36,11 @@ function Carnet() {
     return (
       <div className="modal-overlay">
         <div className="modal">
-          <h2>Person not found</h2>
+          <h2>Person no encontrada</h2>
           <p>
-            Person not found at our database.
+            Persona no encontrada en nuestra base de datos.
             <br />
-            Please call the administrator.
+            porfavor contacte al administrador.
           </p>
         </div>
       </div>
