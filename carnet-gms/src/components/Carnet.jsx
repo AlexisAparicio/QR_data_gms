@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../services/supabaseClient';
 
 function Carnet() {
-  const { id } = useParams();
+  const { token } = useParams();
 
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ function Carnet() {
       const { data, error } = await supabase
         .from('colaboradores_gms')
         .select('*')
-        .eq('id', id)
+        .eq('public_token', token)
         .single();
 
       if (!error) {
@@ -25,7 +25,7 @@ function Carnet() {
     }
 
     fetchEmployee();
-  }, [id]);
+  }, [token]);
 
   if (loading) {
     return <h1>Loading...</h1>;

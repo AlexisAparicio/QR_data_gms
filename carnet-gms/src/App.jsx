@@ -6,7 +6,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Carnet />} />
-        <Route path="/carnet/:id" element={<Carnet />} />
+        <Route path="/verify/:token" element={<Carnet />} />
       </Routes>
     </BrowserRouter>
   );
