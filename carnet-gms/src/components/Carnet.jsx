@@ -11,27 +11,35 @@ function Carnet() {
 
   useEffect(() => {
     async function fetchEmployee() {
+      setLoading(true);
+
       const { data, error } = await supabase
         .from('colaboradores_gms')
         .select('*')
         .eq('public_token', token)
         .single();
 
-      if (!error) {
+      if (error) {
+        console.error('Error loading employee:', error);
+        setEmployee(null);
+      } else {
         setEmployee(data);
       }
 
       setLoading(false);
     }
 
-    fetchEmployee();
+    if (token) {
+      fetchEmployee();
+    } else {
+      setLoading(false);
+    }
   }, [token]);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <h1 className="loading-message">Loading...</h1>;
   }
 
-  // EMPLOYEE NOT FOUND
   if (!employee) {
     return (
       <div className="modal-overlay">
@@ -40,60 +48,52 @@ function Carnet() {
           <p>
             Persona no encontrada en nuestra base de datos.
             <br />
-            porfavor contacte al administrador.
+            Por favor, contacte al administrador.
           </p>
         </div>
       </div>
     );
   }
 
-  // EMPLOYEE INACTIVE
-  if (employee.status === 'INACTIVO') {
-    return (
-      <div className="modal-overlay">
-        <div className="modal">
-          <h2>Access Denied</h2>
-          <p>
-            Person not found at our database.
-            <br />
-            Please call the administrator.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const isActive = employee.status?.toUpperCase() === 'ACTIVO';
+  const statusClass = isActive ? 'active' : 'inactive';
 
-  const imageUrl = `https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/${employee.foto_colaborador}`;
+  const imageUrl =
+    `https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/${employee.foto_colaborador}`;
+
+  const logoUrl =
+    'https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/colaboradores/GMS_logo_redimensionado.jpeg';
 
   return (
     <div className="carnet-container">
-      <div className="carnet-card">
+      <div className={`carnet-card ${statusClass}`}>
         <h1>Carnet Digital</h1>
         <h2 className="company-name">Global Mind-Solutions</h2>
+
         <img
           src={imageUrl}
-          alt="Employee"
+          alt={`${employee.nombre} ${employee.apellido}`}
           className="employee-image"
         />
 
-        <h2 classNAme="Tittle">
+        <h2 className="employee-name">
           {employee.nombre} {employee.apellido}
         </h2>
 
         <p>{employee.cargo}</p>
         <p>{employee.departamento}</p>
 
-        <span className="status">
+        <span className={`status ${statusClass}`}>
           {employee.status}
         </span>
-        
-        <span>
-           <img
-          src="https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/colaboradores/GMS_logo_redimensionado.jpeg"
-          alt="Company Logo"
-          className="company-logo"
-        />
-        </span>
+
+        <div className="logo-container">
+          <img
+            src={logoUrl}
+            alt="Global Mind-Solutions"
+            className="company-logo"
+          />
+        </div>
       </div>
     </div>
   );
