@@ -36,7 +36,7 @@ function Carnet() {
     return (
       <div className="modal-overlay">
         <div className="modal">
-          <h2>Person no encontrada</h2>
+          <h2>Persona no encontrada</h2>
           <p>
             Persona no encontrada en nuestra base de datos.
             <br />
@@ -69,6 +69,7 @@ function Carnet() {
     <div className="carnet-container">
       <div className="carnet-card">
         <h1>Carnet Digital</h1>
+        <h2 className="company-name">Global Mind-Solutions</h2>
 
         <img
           src={imageUrl}
