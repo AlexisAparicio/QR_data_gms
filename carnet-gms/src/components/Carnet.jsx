@@ -71,7 +71,7 @@ function Carnet() {
         <h1>Carnet Digital</h1>
         <h2 className="company-name">Global Mind-Solutions</h2>
         <img
-          src="https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public//Users/alexisaparicio/Library/CloudStorage/OneDrive-GlobalMindSolutions,S.A/SharedFolder/LOGOS/GMS_logo_redimensionado.jpeg"
+          src="https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/GMS_logo_redimensionado.jpeg"
           alt="Company Logo"
           className="company-logo"
         />
