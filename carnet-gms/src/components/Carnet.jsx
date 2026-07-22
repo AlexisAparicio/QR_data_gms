@@ -71,12 +71,6 @@ function Carnet() {
         <h1>Carnet Digital</h1>
         <h2 className="company-name">Global Mind-Solutions</h2>
         <img
-          src="https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/colaboradores/GMS_logo_redimensionado.jpeg"
-          alt="Company Logo"
-          className="company-logo"
-        />
-
-        <img
           src={imageUrl}
           alt="Employee"
           className="employee-image"
@@ -91,6 +85,14 @@ function Carnet() {
 
         <span className="status">
           {employee.status}
+        </span>
+        
+        <span>
+           <img
+          src="https://tijlndsxdomhkudsobhc.supabase.co/storage/v1/object/public/colaboradores/GMS_logo_redimensionado.jpeg"
+          alt="Company Logo"
+          className="company-logo"
+        />
         </span>
       </div>
     </div>
