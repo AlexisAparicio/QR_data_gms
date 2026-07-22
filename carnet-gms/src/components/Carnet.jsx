@@ -67,7 +67,7 @@ function Carnet() {
   return (
     <div className="carnet-container">
       <div className={`carnet-card ${statusClass}`}>
-        <h1>Carnet Digital</h1>
+        <h1 className='carnet-title'>Carnet Digital</h1>
         <h2 className="company-name">Global Mind-Solutions</h2>
 
         <img
